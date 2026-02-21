@@ -1,5 +1,11 @@
 # effect
 
+## 4.0.0-beta.11
+
+### Patch Changes
+
+- [#1401](https://github.com/Effect-TS/effect-smol/pull/1401) [`9431420`](https://github.com/Effect-TS/effect-smol/commit/94314207c8019918200fbcb97aec992219f801f0) Thanks @tim-smart! - Add `WorkflowEngine.layer`, an in-memory layer for the unstable workflow engine.
+
 ## 4.0.0-beta.10
 
 ### Patch Changes
