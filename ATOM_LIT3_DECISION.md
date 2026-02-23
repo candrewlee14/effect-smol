@@ -3,6 +3,8 @@
 Date: 2026-02-23
 Status: Accepted
 
+Canonical running record: `ATOM_LIT3_PROJECT_RECORD.md`
+
 ## Scope
 
 Supported framework targets for this work:
@@ -50,3 +52,7 @@ For `@effect/atom-lit`, host lifecycle behavior must satisfy:
 1. Build `@effect/atom-lit` first with Effect-Atom-first API and parity tests.
 2. Build `@effect/atom-devtools-lit` second on top of `@effect/atom-devtools` core.
 3. Validate behavior parity against Atom semantics (not signal semantics).
+
+Current status:
+- Step 1 complete (`@effect/atom-lit`).
+- Step 2 complete (`@effect/atom-devtools-lit`).

@@ -179,6 +179,21 @@ importers:
         specifier: workspace:^
         version: link:../../effect
 
+  packages/atom/devtools-lit:
+    devDependencies:
+      '@effect/atom-devtools':
+        specifier: workspace:^
+        version: link:../devtools
+      '@effect/atom-lit':
+        specifier: workspace:^
+        version: link:../lit
+      effect:
+        specifier: workspace:^
+        version: link:../../effect
+      lit:
+        specifier: ^3.3.1
+        version: 3.3.2
+
   packages/atom/devtools-react:
     devDependencies:
       '@effect/atom-devtools':
