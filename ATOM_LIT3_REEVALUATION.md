@@ -22,13 +22,16 @@ Canonical running record: `ATOM_LIT3_PROJECT_RECORD.md`
 3. Compared to upstream React adapter, one intentional difference remains:
    - Lit adapter does not depend on React scheduler primitives.
    - Idle policy parity is maintained via `defaultIdleTTL: 400`.
+4. Real `LitElement` lifecycle integration test is now present and passing.
+5. `@effect/atom-devtools-lit` currently lacks strict source-consistency validation
+   when multiple registry sources are passed (`registry`, `atomController`, `controller`).
 
 ## Remaining Non-Ideal Areas
 
 1. `value()` can be called outside render cycles, so tracked subscriptions are not
    as tightly scoped as React's `useSyncExternalStore` model.
-2. Lit tests currently focus on controller-level lifecycle simulation, not a full
-   `LitElement` integration harness.
+2. On reconnect, a render/update cycle is still required to re-establish tracked
+   read subscriptions in the expected rendering path.
 
 ## Decision
 

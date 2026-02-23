@@ -17,6 +17,7 @@ import * as Exit from "effect/Exit"
 import * as AsyncResult from "effect/unstable/reactivity/AsyncResult"
 import * as Atom from "effect/unstable/reactivity/Atom"
 import * as AtomRef from "effect/unstable/reactivity/AtomRef"
+import { LitElement, html } from "lit"
 import type { ReactiveController, ReactiveControllerHost } from "lit"
 import { vi } from "vitest"
 
@@ -389,5 +390,54 @@ describe("atom-lit", () => {
     const keys = Object.keys(module).map((_) => _.toLowerCase())
 
     assert.strictEqual(keys.some((key) => key.includes("signal")), false)
+  })
+
+  it("integrates with real LitElement lifecycle across connect/disconnect/update", async () => {
+    const atom = Atom.make(0)
+    const tag = `x-atom-lit-${Math.random().toString(36).slice(2)}`
+
+    class TestElement extends LitElement {
+      readonly atomController = createAtomController(this)
+
+      render() {
+        return html`<span>${this.atomController.value(atom)}</span>`
+      }
+    }
+
+    customElements.define(tag, TestElement)
+    const element = document.createElement(tag) as TestElement
+
+    document.body.appendChild(element)
+    await element.updateComplete
+    assert.strictEqual(element.shadowRoot?.textContent?.trim(), "0")
+
+    const before = element.atomController.registry.getNodes().get(atom)
+    assert.ok(before)
+    assert.strictEqual(before.listenerCount, 1)
+
+    element.atomController.set(atom, 1)
+    await element.updateComplete
+    assert.strictEqual(element.shadowRoot?.textContent?.trim(), "1")
+
+    document.body.removeChild(element)
+    await Promise.resolve()
+    await Promise.resolve()
+
+    const afterDisconnect = element.atomController.registry.getNodes().get(atom)
+    assert.ok(afterDisconnect === undefined || afterDisconnect.listenerCount === 0)
+
+    document.body.appendChild(element)
+    await element.updateComplete
+    element.requestUpdate()
+    await element.updateComplete
+    const afterReconnect = element.atomController.registry.getNodes().get(atom)
+    assert.ok(afterReconnect)
+    assert.strictEqual(afterReconnect.listenerCount, 1)
+
+    element.atomController.set(atom, 2)
+    await element.updateComplete
+    assert.strictEqual(element.shadowRoot?.textContent?.trim(), "2")
+
+    document.body.removeChild(element)
   })
 })

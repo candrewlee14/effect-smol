@@ -111,7 +111,7 @@ Ownership semantics:
 Executed in this branch:
 
 - `pnpm --filter @effect/atom-lit check` -> pass
-- `pnpm --filter @effect/atom-lit test -- --run` -> pass (`19/19`)
+- `pnpm --filter @effect/atom-lit test -- --run` -> pass (`20/20`)
 - `pnpm --filter @effect/atom-devtools-lit check` -> pass
 - `pnpm --filter @effect/atom-devtools-lit test -- --run` -> pass (`7/7`)
 - `pnpm --filter @effect/atom-devtools-lit build` -> pass
@@ -139,8 +139,6 @@ These are the only targeted improvements identified for this scope:
 
 1. Restrict tracked read subscriptions to render cycle reads only in `@effect/atom-lit`
 2. Add strict source-consistency validation in `@effect/atom-devtools-lit` when multiple sources are passed
-3. Add one real `LitElement` integration test for lifecycle semantics
-4. Consolidate docs into one canonical record (this file) to reduce drift
 
 ## 8) Out of Scope (Explicit)
 
